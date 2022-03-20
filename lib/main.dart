@@ -7,6 +7,7 @@ class BMICalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         appBarTheme: ThemeData.dark().appBarTheme.copyWith(
               backgroundColor: Color(0XFF0A0E21),
