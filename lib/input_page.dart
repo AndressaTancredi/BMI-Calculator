@@ -1,12 +1,8 @@
+import 'package:bmi_calculator/contants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
-
-const bottomContainerHeight = 80.0;
-const activeCardColor = Color(0xFF1D1E33);
-const inactiveCardColor = Color(0xFF111328);
-const bottomContainerColor = Color(0xFFEB1555);
 
 enum Gender {
   male,
@@ -20,6 +16,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
+  int heigth = 180;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +25,7 @@ class _InputPageState extends State<InputPage> {
         title: Text('Calculadora de IMC'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
               child: Row(
@@ -39,7 +37,7 @@ class _InputPageState extends State<InputPage> {
                       selectedGender = Gender.female;
                     });
                   },
-                  color: selectedGender == Gender.female ? activeCardColor : inactiveCardColor,
+                  color: selectedGender == Gender.female ? kActiveCardColor : KInactiveCardColor,
                   cardChild: IconContent(
                     icon: FontAwesomeIcons.venus,
                     label: "Mulher",
@@ -53,7 +51,7 @@ class _InputPageState extends State<InputPage> {
                       selectedGender = Gender.male;
                     });
                   },
-                  color: selectedGender == Gender.male ? activeCardColor : inactiveCardColor,
+                  color: selectedGender == Gender.male ? kActiveCardColor : KInactiveCardColor,
                   cardChild: IconContent(
                     icon: FontAwesomeIcons.mars,
                     label: "Homem",
@@ -63,24 +61,62 @@ class _InputPageState extends State<InputPage> {
             ],
           )),
           Expanded(
-            child: ReusableCard(color: activeCardColor),
+            child: ReusableCard(
+              color: kActiveCardColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Altura",
+                    style: KLabelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        heigth.toString(),
+                        style: KNumberTextStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: KLabelTextStyle,
+                      )
+                    ],
+                  ),
+                  Slider(
+                    value: heigth.toDouble(),
+                    min: 120.0,
+                    max: 220.0,
+                    activeColor: Color(0xFFEB1555),
+                    inactiveColor: Color(0xFF8DE98),
+                    onChanged: (double newValue) {
+                      setState(() {
+                        heigth = newValue.toInt();
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
           ),
           Expanded(
               child: Row(
             children: [
               Expanded(
-                child: ReusableCard(color: activeCardColor),
+                child: ReusableCard(color: kActiveCardColor),
               ),
               Expanded(
-                child: ReusableCard(color: activeCardColor),
+                child: ReusableCard(color: kActiveCardColor),
               ),
             ],
           )),
           Container(
-            color: bottomContainerColor,
+            color: KBottomContainerColor,
             margin: EdgeInsets.only(top: 10),
             width: double.infinity,
-            height: bottomContainerHeight,
+            height: KBottomContainerHeight,
           ),
         ],
       ),
